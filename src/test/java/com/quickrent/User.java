@@ -4,6 +4,7 @@ package quickRent.variable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 @Entity
 public class User {
@@ -12,8 +13,10 @@ public class User {
     @GeneratedValue
     private Integer id;
 
+    @JoinColumn(nullable = false)
     private String userName;
 
+    @JoinColumn(nullable = false)
     private String password;
 
     private Integer power;
