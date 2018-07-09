@@ -40,6 +40,11 @@ public class CollectionController {
     }
 
     //通过用户查看收藏
+    @GetMapping(value = "/rooms/rentUser/{User}")
+    public List<Collection> collectionListByUser(@PathVariable("User") Integer user)
+    {
+        return collectionRepository.findByUser(user);
+    }
 
 
 }
