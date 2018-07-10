@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import quickRent.variable.User;
 import quickRent.variableRepository.RoomRepository;
 import quickRent.variable.Room;
+import quickRent.variableService.RoomService;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,9 @@ public class RoomController {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private RoomService roomService;
 
     //测试方法/显示所有内容
     @GetMapping(value = "/rooms")
@@ -33,6 +38,9 @@ public class RoomController {
         room.setPrice(price);
         room.setPlace(place);
         room.setDistance(distance);
+        room.setChecked(0);
+        room.setStatus(0);
+
 
         return roomRepository.save(room);
     }
@@ -75,6 +83,13 @@ public class RoomController {
         return roomRepository.findByRentUser(rentUser);
     }
 
+    //根据房屋审核情况查找
+    @GetMapping(value = "/rooms/checked/{checked}")
+    public List<Room> roomListByChecked(@PathVariable("checked") Integer checked)
+    {
+        return roomRepository.findByChecked(checked);
+    }
+
     //根据价格范围查找
     //不怎么好用
     @GetMapping(value = "/rooms/price/{price_low}/{price_high}")
@@ -90,6 +105,18 @@ public class RoomController {
             roomList.addAll(tempList);
         }
         return roomList;
+    }
+
+
+
+    //待测试/未成功
+    //根据用户获取待审核的房屋
+    ///checked为0
+    @PostMapping(value = "/users/rooms/{id}")
+    public List<Room> listUncheckedRoom(@PathVariable("id") Integer id,
+                                        @RequestParam("password") String password)
+    {
+        return roomService.uncheckedRoom(id,password);
     }
 
 

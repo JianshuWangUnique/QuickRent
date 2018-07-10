@@ -8,4 +8,5 @@ import java.util.List;
 public interface RoomRepository extends JpaRepository<Room,Integer> {
     public List<Room> findByRentUser(Integer rentUser);
     public List<Room> findByPrice(Integer price);
+    public List<Room> findByChecked(Integer checked);
 }

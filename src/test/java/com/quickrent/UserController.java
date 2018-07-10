@@ -6,9 +6,11 @@ import quickRent.variable.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
+@Transactional
 public class UserController {
 
     @Autowired
@@ -28,6 +30,13 @@ public class UserController {
 
         return userRepository.save(user);
     }
+
+    //根据用户id查找
+    @GetMapping(value = "/Users/{id}")
+    public User userFindOne(@PathVariable("id") Integer id){
+        return userRepository.findById(id).get();
+    }
+
 
 
 }
